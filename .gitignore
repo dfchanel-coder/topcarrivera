@@ -1,0 +1,15 @@
+# Sistema
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Dependencias / build (por si algún día hay tooling)
+node_modules/
+dist/
+.cache/
+
+# Editor / entorno
+.vscode/
+.idea/
+.env
+.env.local
