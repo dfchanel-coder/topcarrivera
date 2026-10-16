@@ -59,13 +59,14 @@ Verificá y ajustá en `index.html`:
 
 | Dónde | Qué | Valor actual |
 |---|---|---|
+| `index.html` (schema + sección Ubicación + mapa) | Dirección | Paysandú 255, Rivera |
 | `index.html` (schema + sección Ubicación) | Horario | Lunes a viernes 8:30–18:30 |
-| `index.html` (schema) | Coordenadas | -30.889458, -55.553115 |
 | `index.html` (schema) | E-mail | jonahiggie@gmail.com |
 | `js/main.js` → `SCHEDULE` | Horario (para el cartel "Abierto/Cerrado") | `[8.5, 18.5]` |
 | `index.html` | Enlace canónico `https://topcar.uy/` | reemplazar por el dominio real |
 
 > El horario tiene dos fuentes en conflicto (Google dice 8:00–18:30, el 1122 indica apertura 9:00): **confirmar con el taller**.
+> Se quitó la coordenada `geo` del JSON-LD al cambiar la dirección: si querés, pasame las coordenadas exactas de Paysandú 255 y las vuelvo a agregar.
 
 ## 🔁 Reemplazar los placeholders por material propio
 
@@ -75,7 +76,9 @@ Verificá y ajustá en `index.html`:
 
 ## 🧾 Incluido por defecto
 
-- Diseño responsive (mobile-first), tema oscuro premium.
+- Diseño responsive (mobile-first), tema oscuro con paleta roja automotriz.
+- Sección destacada de **Auxilio 24 hs** (autos, camionetas y camiones pequeños) con CTA directo a WhatsApp/teléfono.
+- Hero con **disco de freno girando** y **auto de perfil** con barrido de luz y camino en movimiento (SVG animado, sin imágenes externas).
 - SEO on-page: title, description, canonical, Open Graph y **JSON-LD `AutoRepair`** con dirección, horarios y rating de Google.
 - `robots.txt` y `sitemap.xml` listos (actualizar el dominio cuando se compre).
 - Botón flotante de WhatsApp + enlaces a Instagram y Facebook.

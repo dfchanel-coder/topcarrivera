@@ -5,12 +5,12 @@
       <stop offset="1" stop-color="#0a0b0d"/>
     </linearGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ff9247"/>
-      <stop offset="1" stop-color="#ff3d00"/>
+      <stop offset="0" stop-color="#ff6a4d"/>
+      <stop offset="1" stop-color="#b3120b"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.85" cy="0.1" r="0.8">
-      <stop offset="0" stop-color="#ff5c1a" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#ff5c1a" stop-opacity="0"/>
+      <stop offset="0" stop-color="#e0261c" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#e0261c" stop-opacity="0"/>
     </radialGradient>
     <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
       <path d="M60 0H0v60" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
@@ -31,5 +31,6 @@
 
   <text x="92" y="350" font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="66" font-weight="700" fill="#eef1f5">Mecánica Automotriz en Rivera</text>
   <text x="92" y="410" font-family="Inter,Arial,sans-serif" font-size="26" fill="#a3abb5">Frenos · Suspensión · Inyección electrónica · Diagnóstico computarizado</text>
-  <text x="92" y="470" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="600" fill="#ff9247">J. P. Varela 1018 · 098 738 689 · @topcar.rivera</text>
+  <text x="92" y="462" font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="30" font-weight="700" fill="url(#accent)">AUXILIO 24 HS · Autos · Camionetas · Camiones pequeños</text>
+  <text x="92" y="514" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="600" fill="#ff6a4d">Paysandú 255 · 098 738 689 · @topcar.rivera</text>
 </svg>
