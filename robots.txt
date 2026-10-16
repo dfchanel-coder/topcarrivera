@@ -1,4 +1,61 @@
+# TOP CAR — Taller mecánico en Rivera, Uruguay
+# https://dfchanel-coder.github.io/topcarrivera/
+
+# --- Buscadores tradicionales ---
 User-agent: *
 Allow: /
 
-Sitemap: https://topcar.uy/sitemap.xml
+# --- Buscadores y asistentes de IA (GEO / LLMO) ---
+# Se permite explícitamente que los motores generativos rastreen y citen el sitio.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://dfchanel-coder.github.io/topcarrivera/sitemap.xml

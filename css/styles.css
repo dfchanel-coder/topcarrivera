@@ -443,7 +443,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   color: rgba(238, 241, 245, 0.55);
   white-space: nowrap;
 }
-.marquee-track .sep { color: var(--accent); }
+.marquee-track .sep { color: var(--accent-2); }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- Auxilio 24 hs ---------- */
@@ -547,6 +547,74 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .section-light .engine-art { color: var(--accent); opacity: 0.14; }
 .section-light .pattern {
   background-image: repeating-linear-gradient(45deg, rgba(20, 22, 26, 0.04) 0 2px, transparent 2px 22px);
+}
+
+/* ---------- Preguntas frecuentes (acordeón nativo, sin JS) ---------- */
+.faq-list {
+  max-width: 880px;
+  display: grid;
+  gap: 12px;
+}
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.24s var(--ease), box-shadow 0.24s var(--ease);
+}
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  margin-top: -4px;
+  border-right: 2px solid var(--accent-2);
+  border-bottom: 2px solid var(--accent-2);
+  transform: rotate(45deg);
+  transition: transform 0.28s var(--ease);
+}
+.faq-item[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+.faq-item summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: -3px; border-radius: var(--radius); }
+.faq-item p {
+  margin: 0;
+  padding: 0 24px 22px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+.faq-item p a { color: var(--accent-2); }
+.section-light .faq-item {
+  background: var(--light-surface);
+  border-color: var(--light-line);
+  box-shadow: 0 1px 2px rgba(20, 22, 26, 0.04);
+}
+.section-light .faq-item[open] {
+  border-color: #d8dade;
+  box-shadow: 0 14px 34px rgba(20, 22, 26, 0.08);
+}
+.section-light .faq-item p { color: var(--ink-muted); }
+.section-light .faq-item p a { color: var(--accent); }
+@media (hover: hover) {
+  .section-light .faq-item:hover { border-color: #d8dade; }
+  .faq-item:hover { border-color: var(--line-strong); }
+}
+@media (max-width: 560px) {
+  .faq-item summary { padding: 18px 18px; font-size: 0.98rem; }
+  .faq-item p { padding: 0 18px 18px; }
 }
 
 .section-head { max-width: 720px; margin-bottom: 54px; }
@@ -819,6 +887,27 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding-top: 22px;
   color: var(--muted);
   font-size: 0.82rem;
+}
+/* Firma discreta del desarrollador: bajo contraste, nunca compite con la marca del cliente.
+   El valor de opacidad mantiene la discreción sin romper el contraste AA. */
+.dev-credit {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.76rem;
+  letter-spacing: 0.01em;
+}
+.dev-credit a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  transition: color 0.22s var(--ease), border-color 0.22s var(--ease);
+}
+.dev-credit a:hover,
+.dev-credit a:focus-visible {
+  color: var(--accent-2);
+  border-bottom-color: var(--accent-2);
+}
+@media (max-width: 720px) {
+  .dev-credit { flex-basis: 100%; }
 }
 
 /* ---------- WhatsApp flotante ---------- */

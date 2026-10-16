@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://topcar.uy/</loc>
+    <loc>https://dfchanel-coder.github.io/topcarrivera/</loc>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/og-image.jpg</image:loc>
+      <image:title>TOP CAR — Taller mecánico en Rivera, Uruguay</image:title>
+      <image:caption>Mecánica general, frenos, suspensión e inyección electrónica. Auxilio 24 hs.</image:caption>
+    </image:image>
   </url>
 </urlset>

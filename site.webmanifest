@@ -1,0 +1,32 @@
+{
+  "name": "TOP CAR — Taller Mecánico en Rivera",
+  "short_name": "TOP CAR",
+  "description": "Mecánica automotriz, frenos, suspensión e inyección electrónica en Rivera, Uruguay. Auxilio 24 hs para autos, camionetas y camiones pequeños.",
+  "lang": "es-UY",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#0a0b0d",
+  "theme_color": "#d6002d",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
