@@ -76,9 +76,10 @@ Verificá y ajustá en `index.html`:
 
 ## 🧾 Incluido por defecto
 
-- Diseño responsive (mobile-first), tema oscuro con paleta roja automotriz.
+- Diseño responsive (mobile-first), paleta roja automotriz y ritmo editorial de secciones claras/oscuras (inspirado en referentes del rubro).
+- Tipografía **Montserrat** (títulos 800/900) + **Inter** (texto), micro-etiquetas en mayúscula con línea roja.
 - Sección destacada de **Auxilio 24 hs** (autos, camionetas y camiones pequeños) con CTA directo a WhatsApp/teléfono.
-- Hero con **disco de freno girando** y **auto de perfil** con barrido de luz y camino en movimiento (SVG animado, sin imágenes externas).
+- Hero con **disco de freno girando** en SVG animado (sin imágenes externas ni stock).
 - SEO on-page: title, description, canonical, Open Graph y **JSON-LD `AutoRepair`** con dirección, horarios y rating de Google.
 - `robots.txt` y `sitemap.xml` listos (actualizar el dominio cuando se compre).
 - Botón flotante de WhatsApp + enlaces a Instagram y Facebook.
