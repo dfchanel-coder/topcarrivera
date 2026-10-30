@@ -1,201 +1,159 @@
-/* =========================================================
-   TOP CAR — One-page | JS
-   Sin dependencias. Vanilla JS.
-   ========================================================= */
-(function () {
-  "use strict";
+/* Workshop hours use the shop's time zone, regardless of the visitor's zone. */
+function workshopStatus(date, pt = false) {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone:'America/Montevideo', weekday:'short', hour:'2-digit', minute:'2-digit', hourCycle:'h23' }).formatToParts(date);
+  const part = type => parts.find(p => p.type === type)?.value;
+  const day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(part('weekday'));
+  const time = Number(part('hour')) + Number(part('minute')) / 60;
+  const working = day >= 1 && day <= 5;
+  const open = working && time >= 8.5 && time < 18.5;
+  let text;
+  if (open) text = pt ? 'Aberto agora · fecha às 18h30' : 'Abierto ahora · cierra 18:30';
+  else if (working && time < 8.5) text = pt ? 'Fechado · abre hoje às 8h30' : 'Cerrado · abre hoy 8:30';
+  else {
+    const tomorrow = (day >= 1 && day <= 4) || day === 0;
+    text = pt ? `Fechado · abre ${tomorrow ? 'amanhã' : 'segunda'} às 8h30` : `Cerrado · abre ${tomorrow ? 'mañana' : 'lunes'} 8:30`;
+  }
+  return { open, text };
+}
+if (typeof module !== 'undefined') module.exports = { workshopStatus };
 
-  const header = document.getElementById("siteHeader");
-  const navToggle = document.getElementById("navToggle");
-  const mainNav = document.getElementById("mainNav");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Guardia: si el script fallara en cualquier punto, el contenido jamás debe
-  // quedar oculto detrás de las animaciones de entrada.
-  window.addEventListener("error", () => {
-    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-visible"));
-  });
-
-  /* ---------- Año dinámico en el footer ---------- */
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-  /* ---------- Header con fondo al hacer scroll ---------- */
-  const onScroll = () => {
-    if (!header) return;
-    header.classList.toggle("scrolled", window.scrollY > 12);
+/* TOP CAR: progressive enhancement, forgiving search and accessible carousel. */
+(() => {
+  'use strict';
+  if (typeof document === 'undefined') return;
+  const pt = document.documentElement.lang === 'pt-BR';
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  document.documentElement.classList.add('js');
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const menu = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('mainNav');
+  menu.hidden = false;
+  const setMenu = (open, restore = false) => {
+    nav.classList.toggle('is-open', open);
+    menu.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-label', pt ? (open ? 'Fechar menu' : 'Abrir menu') : (open ? 'Cerrar menú' : 'Abrir menú'));
+    if (restore) menu.focus();
   };
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
+  nav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('is-open')) setMenu(false, true); });
+  document.addEventListener('click', e => { if (!e.target.closest('.site-header')) setMenu(false); });
+  matchMedia('(min-width: 761px)').addEventListener('change', () => setMenu(false));
+  document.querySelector('main').addEventListener('focusin', () => setMenu(false));
 
-  /* ---------- Menú móvil ---------- */
-  if (navToggle && mainNav) {
-    const setMenu = (open) => {
-      mainNav.classList.toggle("open", open);
-      navToggle.setAttribute("aria-expanded", String(open));
-      navToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
-    };
-
-    navToggle.addEventListener("click", () => {
-      setMenu(navToggle.getAttribute("aria-expanded") !== "true");
-    });
-
-    mainNav.addEventListener("click", (e) => {
-      if (e.target.closest("a")) setMenu(false);
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setMenu(false);
-    });
-
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 860) setMenu(false);
-    });
+  // Only photos rotate, never the headings or links. Autoplay pauses offscreen.
+  const carousel = document.querySelector('.hero-media');
+  const slides = [...carousel.querySelectorAll('.hero-slide')];
+  const pause = carousel.querySelector('[data-carousel="pause"]');
+  const count = carousel.querySelector('.slide-count');
+  carousel.querySelector('.carousel-controls').hidden = false;
+  let active = 0, timer = null, paused = motion.matches, hover = false, focused = false, visible = true, request = 0;
+  function updatePause() {
+    pause.setAttribute('aria-label', paused ? pause.dataset.play : pause.dataset.pause);
+    pause.firstElementChild.textContent = paused ? '▶' : 'Ⅱ';
   }
-
-  /* ---------- Reveal on scroll ---------- */
-  const revealEls = Array.from(document.querySelectorAll(".reveal"));
-  const revealAll = () => revealEls.forEach((el) => el.classList.add("is-visible"));
-  const revealInViewport = (factor) =>
-    revealEls.forEach((el) => {
-      if (el.getBoundingClientRect().top < window.innerHeight * factor) {
-        el.classList.add("is-visible");
-      }
-    });
-
-  if (!reduceMotion && "IntersectionObserver" in window) {
-    const revealObserver = new IntersectionObserver(
-      (entries, obs) => {
-        entries.forEach((entry, i) => {
-          if (!entry.isIntersecting) return;
-          // Pequeño stagger para elementos que entran juntos
-          setTimeout(() => entry.target.classList.add("is-visible"), i * 70);
-          obs.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" }
-    );
-    revealEls.forEach((el) => revealObserver.observe(el));
-
-    // Red de seguridad 1: lo que ya está en pantalla al cargar se muestra sí o sí.
-    revealInViewport(1.1);
-
-    // Red de seguridad 2: pestañas abiertas en segundo plano no reciben callbacks.
-    // Al volver a primer plano, repasamos lo que quedó a la vista.
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) revealInViewport(1.25);
-    });
-  } else {
-    revealAll();
+  function schedule() {
+    clearTimeout(timer);
+    if (!paused && !hover && !focused && visible && !document.hidden) timer = setTimeout(() => show(active + 1), 6500);
   }
-
-  /* ---------- Link activo según sección visible ---------- */
-  const navLinks = Array.from(mainNav ? mainNav.querySelectorAll('a[href^="#"]') : []);
-  const sections = navLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
-  if ("IntersectionObserver" in window && sections.length) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          navLinks.forEach((link) => {
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") === "#" + entry.target.id
-            );
-          });
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((s) => sectionObserver.observe(s));
+  async function show(index) {
+    const token = ++request;
+    const next = (index + slides.length) % slides.length;
+    const img = slides[next].querySelector('img');
+    if (img.dataset.src) { img.srcset = img.dataset.srcset; img.src = img.dataset.src; delete img.dataset.src; }
+    try { await img.decode(); } catch { schedule(); return; }
+    if (token !== request) return;
+    slides.forEach((slide, i) => { slide.classList.toggle('is-active', i === next); slide.setAttribute('aria-hidden', String(i !== next)); });
+    active = next;
+    count.innerHTML = `0${active + 1} <span>/ 02</span>`;
+    schedule();
   }
-
-  /* ---------- Estado abierto / cerrado (hora de Rivera) ---------- */
-  const statusEl = document.getElementById("openStatus");
-  if (statusEl) {
-    const SCHEDULE = [
-      null,              // 0 domingo
-      [8.5, 18.5],       // 1 lunes
-      [8.5, 18.5],       // 2 martes
-      [8.5, 18.5],       // 3 miércoles
-      [8.5, 18.5],       // 4 jueves
-      [8.5, 18.5],       // 5 viernes
-      null               // 6 sábado
-    ];
-    const DAY_NAMES = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-
-    const fmtHour = (h) => {
-      const hh = Math.floor(h);
-      const mm = h % 1 ? "30" : "00";
-      return hh + ":" + mm;
-    };
-
-    const getLocalNow = () => {
-      try {
-        const parts = new Intl.DateTimeFormat("es-UY", {
-          timeZone: "America/Montevideo",
-          weekday: "short",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false
-        }).formatToParts(new Date());
-        const get = (type) => parts.find((p) => p.type === type)?.value || "";
-        const dayMap = { dom: 0, lun: 1, mar: 2, mié: 3, jue: 4, vie: 5, sáb: 6 };
-        const day = dayMap[get("weekday").toLowerCase().replace(".", "")];
-        const hour = parseInt(get("hour"), 10) % 24;
-        const minute = parseInt(get("minute"), 10);
-        return { day, time: hour + minute / 60 };
-      } catch (err) {
-        const now = new Date();
-        return { day: now.getDay(), time: now.getHours() + now.getMinutes() / 60 };
-      }
-    };
-
-    const updateStatus = () => {
-      const { day, time } = getLocalNow();
-      const today = SCHEDULE[day];
-
-      if (today && time >= today[0] && time < today[1]) {
-        statusEl.textContent = "Abierto ahora · cierra " + fmtHour(today[1]);
-        statusEl.classList.add("is-open");
-        statusEl.classList.remove("is-closed");
-      } else {
-        let nextDay = day;
-        for (let i = 1; i <= 7; i++) {
-          const d = (day + i) % 7;
-          if (SCHEDULE[d]) { nextDay = d; break; }
-        }
-        const label =
-          nextDay === day
-            ? "hoy"
-            : nextDay === (day + 1) % 7
-            ? "mañana"
-            : DAY_NAMES[nextDay];
-        statusEl.textContent = "Cerrado · abre " + label + " " + fmtHour(SCHEDULE[nextDay][0]);
-        statusEl.classList.add("is-closed");
-        statusEl.classList.remove("is-open");
-      }
-    };
-
-    updateStatus();
-    setInterval(updateStatus, 60 * 1000);
-  }
-
-  /* ---------- Cierre suave del menú al hacer clic en anclas ---------- */
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const id = link.getAttribute("href");
-      if (!id || id === "#") return;
-      const target = document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      const offset = (header ? header.offsetHeight : 0) + 8;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
-      history.replaceState(null, "", id);
-    });
+  carousel.addEventListener('click', e => {
+    const button = e.target.closest('[data-carousel]');
+    if (!button) return;
+    if (button.dataset.carousel === 'pause') { paused = !paused; updatePause(); schedule(); }
+    else { paused = true; updatePause(); show(active + (button.dataset.carousel === 'next' ? 1 : -1)); }
   });
+  carousel.addEventListener('mouseenter', () => { hover = true; schedule(); });
+  carousel.addEventListener('mouseleave', () => { hover = false; schedule(); });
+  carousel.addEventListener('focusin', () => { focused = true; schedule(); });
+  carousel.addEventListener('focusout', e => { focused = carousel.contains(e.relatedTarget); schedule(); });
+  document.addEventListener('visibilitychange', schedule);
+  motion.addEventListener('change', () => { paused = motion.matches; updatePause(); schedule(); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries => { visible = entries[0].isIntersecting; schedule(); }).observe(carousel);
+  updatePause();
+  window.addEventListener('load', schedule, { once: true });
+
+  // Search-only aliases; no hidden SEO keywords or duplicated doorway content.
+  const aliases = {
+    diagnostico: 'diagnostico computarizado escaner scanner scaner automotriz inyeccion injecao injeccion injeção eletronica electronica sensores bobinas inyectores bicos check engine luz motor tablero painel perde fuerza pierde forca falhando falha falla tironea ratea consumo gasolina nafta',
+    frenos: 'frenos freios freio freno pastillas pastilhas discos amortiguadores amortecedores suspension suspensao bujes buchas rotulas pivôs ruido frenar barulho frear chilla chirrido golpes pozos rangido',
+    motor: 'motor mecanica mecanico geral taller oficina embrague embriague embreagem embreague embriage caja cambios cambio marchas transmissao transmision correa correia distribucion distribuicao junta reparacion conserto pierde fuerza perde forca falha falla',
+    mantenimiento: 'aceite oleo óleo filtros filtro service servis servise mantenimiento manutencao revisao revision troca cambio preventivo viagem viaje ruta estrada',
+    electricidad: 'no arranca nao pega no prende nao liga bateria electrica eletrica electricidad alternador arranque partida carga calienta esquenta aquecimento temperatura refrigeracion arrefecimento radiador agua termostato aire ar condicionado aire acondicionado no enfria nao gela calefaccion',
+    alineacion: 'alineacion alineamiento alinhamento balanceo balanceamento pneus neumaticos cubiertas ruedas rodas volante vibra vibracion vibracao vai lado va lado puxa lado desgaste'
+  };
+  const normalize = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  const stop = new Set('mi meu me el la los las un una o a os as um uma de del do da en em que se al ao con com para por le lo esta y e muy muito hace faz eu tengo estou tiene ta no nao'.split(' '));
+  function distanceOne(a, b) {
+    if (Math.abs(a.length - b.length) > 1) return false;
+    let i = 0, j = 0, changes = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++changes > 1) return false;
+      if (a.length >= b.length) i++;
+      if (b.length >= a.length) j++;
+    }
+    return changes + (i < a.length || j < b.length ? 1 : 0) <= 1;
+  }
+  const cards = [...document.querySelectorAll('[data-service]')];
+  const words = new Map(cards.map(card => [card, normalize(card.textContent + ' ' + aliases[card.dataset.service]).split(' ')]));
+  const field = document.getElementById('service-query');
+  const status = document.getElementById('search-status');
+  const empty = document.querySelector('.no-results');
+  document.querySelector('.service-search').hidden = false;
+  document.querySelector('.search-note').hidden = false;
+  function search() {
+    const tokens = normalize(field.value).split(' ').filter(w => w.length > 1 && !stop.has(w));
+    let found = 0;
+    for (const card of cards) {
+      const list = words.get(card);
+      const matches = !tokens.length || tokens.every(t => list.some(w => w === t || (t.length >= 4 && w.startsWith(t)) || (t.length >= 5 && distanceOne(t, w))));
+      card.hidden = !matches;
+      if (matches) found++;
+    }
+    empty.hidden = found > 0;
+    document.querySelector('.service-grid').hidden = !found;
+    document.querySelector('.service-grid').classList.toggle('is-filtered', tokens.length > 0);
+    status.textContent = pt ? `${found} serviços encontrados.` : `${found} servicios encontrados.`;
+  }
+  let searchTimer;
+  field.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(search, 120); });
+  document.querySelectorAll('[data-query]').forEach(button => button.addEventListener('click', () => { field.value = button.dataset.query; search(); }));
+  document.getElementById('clear-search').addEventListener('click', () => { field.value = ''; search(); field.focus(); });
+
+  const statusEl = document.getElementById('openStatus');
+  function updateStatus() {
+    const {open, text} = workshopStatus(new Date(), pt);
+    statusEl.classList.toggle('is-open', open);
+    statusEl.textContent = text;
+    statusEl.title = pt ? 'Horário habitual; consulte sobre feriados.' : 'Horario habitual; consultá por feriados.';
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000);
+  // Third-party map is loaded only on request.
+  const mapButton = document.querySelector('.map-load');
+  mapButton.hidden = false;
+  mapButton.addEventListener('click', () => {
+    const frame = document.createElement('iframe');
+    frame.title = mapButton.dataset.title;
+    frame.src = 'https://www.google.com/maps?q=Paysand%C3%BA%20255%2C%20Rivera%2C%20Uruguay&output=embed';
+    frame.referrerPolicy = 'no-referrer-when-downgrade';
+    frame.allowFullscreen = true;
+    frame.tabIndex = 0;
+    document.getElementById('map-slot').replaceChildren(frame);
+    document.querySelector('.map-card').classList.add('map-loaded');
+    mapButton.hidden = true;
+    frame.focus();
+  }, { once:true });
 })();

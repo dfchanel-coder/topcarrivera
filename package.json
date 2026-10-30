@@ -1,0 +1,16 @@
+{
+  "name": "topcar-rivera",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Static bilingual TOP CAR workshop website. Tooling is development-only.",
+  "scripts": {
+    "build": "python tools/build-site.py",
+    "preview": "node tools/preview.mjs",
+    "test": "node --test tools/hours.test.cjs && python tools/validate-site.py",
+    "audit": "node tools/audit.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "4.14.0",
+    "lighthouse": "13.6.0"
+  }
+}

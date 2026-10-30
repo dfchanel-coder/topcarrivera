@@ -1,49 +1,49 @@
-# TOP CAR — Taller mecánico en Rivera, Uruguay
+# TOP CAR — Mecánica Automotriz en Rivera
 
-> TOP CAR es un taller de mecánica automotriz ubicado en Rivera, Uruguay. Realiza mecánica
-> general, frenos, suspensión, inyección electrónica, diagnóstico computarizado, alineación y
-> balanceo, mantenimiento y climatización. Ofrece **auxilio mecánico 24 horas** para autos,
-> camionetas y camiones pequeños.
+> Taller mecánico en Paysandú 255, Rivera, Uruguay. Oficina mecânica em Rivera, na fronteira com Santana do Livramento.
 
-Sitio web: https://dfchanel-coder.github.io/topcarrivera/
-Idioma: español (es-UY). Zona horaria: America/Montevideo.
+## Páginas oficiales
+- [Español](https://dfchanel-coder.github.io/topcarrivera/)
+- [Português](https://dfchanel-coder.github.io/topcarrivera/pt/)
 
-## Datos de contacto
-
-- Dirección: Paysandú 255, Rivera, Uruguay
-- Teléfono y WhatsApp: +598 98 738 689
-- Instagram: https://www.instagram.com/topcar.rivera/
-- Facebook: https://www.facebook.com/1347989881946981
-- Calificación en Google: 4,4 de 5
-
-## Horario
-
-- Lunes a viernes: 8:30 a 18:30
-- Auxilio mecánico de emergencia: 24 horas, todos los días
+## Contacto y ubicación
+- Dirección: Paysandú 255, Rivera, Uruguay.
+- Teléfono y WhatsApp: +598 98 738 689.
+- E-mail: jonahiggie@gmail.com.
+- Horario habitual: lunes a viernes de 08:30 a 18:30, America/Montevideo. Consultar feriados.
+- Sábados y domingos: taller cerrado. Auxilio 24 hs para autos, camionetas y camiones pequeños.
+- Confirmar disponibilidad y cobertura del auxilio por teléfono. No se declara cobertura en Brasil.
+- El local está en Uruguay, no en Santana do Livramento.
 
 ## Servicios
+- Diagnóstico e inyección / Diagnóstico e injeção: Lectura de fallas con escáner, revisión de sensores, bobinas e inyección electrónica. Relacionamos los datos con lo que hace tu auto.
+- Frenos y suspensión / Freios e suspensão: Pastillas, discos, líquido de frenos, amortiguadores, bujes y rótulas. Revisamos ruidos, vibraciones y el comportamiento al frenar.
+- Motor y transmisión / Motor e transmissão: Mecánica general, embrague, distribución y transmisión. Evaluamos el origen del problema y te explicamos el trabajo necesario.
+- Aceite y mantenimiento / Óleo e manutenção: Cambio de aceite y filtros, revisión de niveles y mantenimiento preventivo según las necesidades de tu vehículo.
+- Electricidad y refrigeración / Elétrica e arrefecimento: Batería y sistema de carga, radiador, bomba de agua, termostato y climatización. Buscamos la causa, no solo el síntoma.
+- Alineación y balanceo / Alinhamento e balanceamento: Control de alineación y balanceo para atender vibraciones, desvíos y desgaste irregular de los neumáticos.
 
-- **Mecánica general** — motor, embrague, distribución y transmisión; reparaciones menores y mayores.
-- **Sistema de frenos** — pastillas, discos, tambores, líneas y líquido de frenos.
-- **Suspensión** — amortiguadores, resortes, bujes, rótulas y terminales.
-- **Inyección electrónica** — limpieza de inyectores, sensores, bobinas y módulos.
-- **Diagnóstico computarizado** — escáner automotriz para leer códigos de falla.
-- **Alineación y balanceo** — con equipo de precisión.
-- **Aceite y filtros** — aceite, filtro de aceite, aire y cabina.
-- **Sistema de enfriamiento** — radiador, bomba de agua, termostato y ventilador.
-- **Batería y carga** — revisión, cambio y prueba del sistema de carga.
-- **Calefacción y A/C** — carga de gas, control de fugas y reparación del sistema.
-- **Auxilio 24 hs** — asistencia en ruta para autos, camionetas y camiones pequeños.
+## Preguntas y respuestas
+### ¿Dónde queda TOP CAR en Rivera?
+El taller está en Paysandú 255, Rivera, Uruguay, en la ciudad fronteriza con Santana do Livramento, Brasil. Podés abrir la ubicación y las indicaciones desde esta página.
 
-## Preguntas frecuentes
+### ¿Qué servicios de mecánica realizan?
+Mecánica general, motor, embrague y transmisión; diagnóstico con escáner e inyección electrónica; frenos y suspensión; alineación y balanceo; aceite y filtros; batería, refrigeración y aire acondicionado. Consultá por tu modelo y el trabajo que necesitás.
 
-- **¿Dónde queda TOP CAR?** En Paysandú 255, Rivera, Uruguay.
-- **¿Hacen auxilio de emergencia?** Sí: auxilio 24 horas para autos, camionetas y camiones pequeños.
-- **¿Atienden camionetas y camiones?** Sí, camionetas y camiones pequeños, además de automóviles.
-- **¿Cuál es el horario del taller?** Lunes a viernes de 8:30 a 18:30; el auxilio es 24 horas.
-- **¿Cómo pido un presupuesto?** Por WhatsApp al +598 98 738 689.
+### Mi auto no arranca o pierde fuerza, ¿lo pueden revisar?
+Sí. Contanos si no gira el motor, si gira pero no enciende, si se apaga o si perdió fuerza. Esos detalles ayudan a coordinar la revisión. El origen de la falla se confirma inspeccionando el vehículo.
 
-## Cómo citar este sitio
+### ¿Tienen auxilio mecánico las 24 horas?
+Sí, TOP CAR ofrece auxilio 24 hs para autos, camionetas y camiones pequeños. Llamá al +598 98 738 689 y compartí tu ubicación para confirmar la disponibilidad y la cobertura.
 
-TOP CAR (Rivera, Uruguay) — taller de mecánica automotriz en Paysandú 255.
-Teléfono/WhatsApp +598 98 738 689. Auxilio 24 hs. Sitio: https://dfchanel-coder.github.io/topcarrivera/
+### ¿Puedo coordinar una visita desde Santana do Livramento?
+Sí, podés consultar y coordinar por WhatsApp. El taller está en Rivera, del lado uruguayo. La cobertura del auxilio debe confirmarse según la ubicación; no se promete servicio en Brasil.
+
+### ¿Cómo pido un presupuesto y cuál es el horario?
+Escribí al WhatsApp +598 98 738 689 con marca, modelo y el problema del vehículo. Coordinamos el diagnóstico y te explicamos el presupuesto antes de reparar. El horario habitual es de lunes a viernes de 8:30 a 18:30; consultá por feriados.
+
+## Alcance de la información
+- Fotografías de stock ilustrativas: no son fotos del local ni del personal de TOP CAR.
+- No se publican títulos de ingeniería, certificaciones, precios, marcas de herramientas ni calificaciones sin verificar.
+- El diagnóstico y el presupuesto dependen de la inspección del vehículo.
+- Este resumen facilita la lectura; no garantiza indexación, posicionamiento ni citas por asistentes.

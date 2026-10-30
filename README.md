@@ -1,185 +1,95 @@
-# TOP CAR — One Page | Taller Mecánico en Rivera, Uruguay
+# TOP CAR — Mecánica automotriz en Rivera
 
-Sitio de una sola página para **TOP CAR — Mecánica Automotriz** (Rivera, Uruguay).
-HTML + CSS + JavaScript vanilla, sin build ni dependencias: se sube a cualquier hosting estático y se apunta el dominio.
+Landing estática bilingüe para el taller TOP CAR. HTML, CSS y JavaScript nativos; sin dependencias de ejecución, formularios externos, trackers ni cookies propias.
 
-**Producción:** <https://dfchanel-coder.github.io/topcarrivera/>
-
----
-
-## 📁 Estructura
-
-```
-TopCar/
-├── index.html              # Página única (contenido + SEO + datos estructurados)
-├── css/
-│   └── styles.css          # Estilos (responsive, secciones claras/oscuras, animaciones)
-├── js/
-│   └── main.js             # Menú, scroll, sección activa, estado abierto/cerrado
-├── assets/
-│   ├── icon-square.svg     # Fuente del icono cuadrado (apple-touch + manifest)
-│   ├── favicon.svg         # Fuente del favicon (pestaña del navegador)
-│   ├── logo.svg
-│   ├── og-source.html      # Fuente de la imagen social (1200×630)
-│   ├── favicon.ico         # Generado · 16/32/48 px
-│   ├── apple-touch-icon.png# Generado · 180×180
-│   ├── icon-192.png        # Generado · manifest
-│   ├── icon-512.png        # Generado · manifest
-│   └── og-image.jpg        # Generado · 1200×630 (og:image)
-├── tools/
-│   └── build-assets.ps1    # Regenera los PNG/ICO a partir de los SVG/HTML fuente
-├── robots.txt              # Incluye permisos explícitos para crawlers de IA
-├── sitemap.xml
-├── llms.txt                # Resumen estructurado para motores generativos (GEO/LLMO)
-└── site.webmanifest
-```
-
-## ▶️ Ver en local
-
-No hace falta nada más que un servidor estático. Por ejemplo:
+## Vista previa y edición
 
 ```powershell
-# Con Node
-npx serve -l 8099 .
-
-# Con Python
-python -m http.server 8080
+npm run build
+npm test
+npm run preview
 ```
 
-Abrí <http://localhost:8099> (o el puerto que corresponda).
+Abrir http://127.0.0.1:8123/topcarrivera/ o http://127.0.0.1:8123/topcarrivera/pt/.
+El servidor se limita a localhost y reproduce el subdirectorio de GitHub Pages. Detener con Ctrl+C.
 
-## 🎨 Regenerar imágenes e iconos
+- `tools/build-site.py`: contenido español/portugués, metadatos, JSON-LD, sitemap y robots. Es la fuente de edición; no editar a mano los HTML generados.
+- `css/styles.css`: diseño responsive, estados de foco y movimiento reducido.
+- `js/main.js`: menú, carrusel, búsqueda tolerante, horario y mapa bajo demanda.
+- `index.html` y `pt/index.html`: páginas completas indexables sin ejecutar JavaScript.
+- `assets/photos/`: imágenes ilustrativas WebP con variantes de 640, 960 y 1280 px. Procedencia en `SOURCES.md`.
+- `assets/fonts/`: fuentes locales reducidas y licencias OFL.
+- `tools/validate-site.py`: comprobaciones de archivos, anclas, idioma, metadatos, JSON-LD, sitemap y robots.
+- `tools/hours.test.cjs`: pruebas de horarios y zona de Rivera, incluidos apertura, cierre y fin de semana.
 
-Los PNG y el `.ico` se generan desde las fuentes SVG/HTML con **Microsoft Edge en modo headless**
-(no requiere ImageMagick, Inkscape ni dependencias de npm):
+Python 3 para regenerar contenido; Node 22.12+ para las herramientas de auditoría. El hosting solo necesita servir los archivos estáticos, sin Python ni Node.
+
+## Diseño y comportamiento
+
+Identidad grafito, blanco cálido y rojo. Tipografía Barlow Condensed e Inter. Portada fotográfica, seis grupos de servicios, explicación del diagnóstico, proceso, auxilio 24 hs, frontera, ubicación y preguntas frecuentes.
+
+El carrusel cambia cada 6,5 segundos con fundido. Tiene controles anterior/siguiente y pausa; se pausa al recibir foco, al pasar el mouse, fuera de pantalla y con la pestaña oculta. Respeta `prefers-reduced-motion`. Solo cambian las fotografías: los textos y enlaces permanecen estables.
+
+El buscador normaliza tildes y acepta sinónimos españoles/portugueses, variantes locales y un error de edición en palabras largas. Casos comprobados: `embriague`, `suspencion`, `nao pega`, `barulho ao frear`. No diagnostica: filtra servicios. Los alias viven en la lógica de búsqueda, no como texto SEO oculto.
+
+Sin JavaScript se mantienen servicios, menús, enlaces, preguntas y la primera foto. El mapa de Google se carga solo al solicitarlo; el enlace «Cómo llegar» funciona también sin JavaScript.
+
+## SEO local, GEO y LLMO
+
+- Páginas independientes en español de Uruguay y portugués de Brasil.
+- Canonical propio por idioma y `hreflang` recíproco `es-UY`, `pt-BR`, `x-default`.
+- Dirección, contacto y horarios consistentes entre contenido visible, datos estructurados y `llms.txt`.
+- JSON-LD `AutoRepair`, catálogo de servicios, `WebSite`, `WebPage` y `FAQPage`, sin valoraciones ni certificaciones inventadas.
+- Preguntas por síntomas y términos naturales: frenos/freios, embrague/embreagem, mantenimiento/revisão y auxilio/socorro.
+- Distinción explícita: local en Rivera, Uruguay; visitantes de Livramento pueden consultar. La cobertura del auxilio se confirma según la ubicación, sin inventar servicio en Brasil.
+- Metadatos sociales, textos alternativos y enlaces rastreables.
+- No se agregan faltas artificiales a los textos ni páginas repetidas para captar variantes de una misma búsqueda.
+
+`llms.txt` es un resumen complementario. No garantiza que buscadores o asistentes lo utilicen, ni asegura citas. Para las funciones de IA de Google siguen siendo relevantes las prácticas fundamentales de SEO y el contenido útil. El marcado de FAQ tampoco garantiza resultados enriquecidos.
+
+Referencias oficiales:
+- https://developers.google.com/search/docs/appearance/ai-features
+- https://developers.google.com/search/docs/essentials/spam-policies#keyword-stuffing
+- https://support.google.com/business/answer/7091
+- https://developers.google.com/search/docs/specialty/international/localized-versions
+
+## Sitemap y robots.txt
+
+`tools/build-site.py` genera ambos archivos con la misma URL base que los canonical y los identificadores de la entidad.
+
+El sitemap incluye solo las dos páginas canónicas indexables. No incluye anclas, herramientas, fotos ilustrativas como páginas, prioridades inventadas ni frecuencias sin fundamento. Ambas entradas tienen los mismos alternates recíprocos. `lastmod` corresponde a la fecha de esta revisión de contenido; actualizarlo cuando cambie sustancialmente el contenido, no cada vez que se ejecute el generador.
+
+`robots.txt` permite rastrear el contenido público y los recursos CSS/JS. El grupo `User-agent: *` también cubre crawlers de IA que respeten robots; no hace falta duplicar docenas de grupos equivalentes. Incluye la URL absoluta del sitemap. Permitir rastreo no garantiza indexación ni regula por sí solo los usos posteriores del contenido.
+
+**Limitación del hosting actual:** el sitio vive en `https://dfchanel-coder.github.io/topcarrivera/`. Los buscadores buscan robots.txt en `https://dfchanel-coder.github.io/robots.txt`; el archivo dentro de `/topcarrivera/` no controla ese origen. Se puede enviar el sitemap del proyecto directamente a Search Console. Para robots efectivo, publicarlo en la raíz del sitio de usuario de GitHub Pages o conectar un dominio propio con estos archivos en su raíz. Este proyecto no modifica ese otro repositorio ni ninguna configuración externa.
+
+Referencia: https://developers.google.com/search/docs/crawling-indexing/robots/create-robots-txt
+
+Al cambiar de dominio, modificar `BASE` en `tools/build-site.py`, regenerar y actualizar la URL base esperada en el validador. Crear/configurar CNAME y DNS en el hosting por separado.
+
+## Auditorías reproducibles
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\build-assets.ps1
+npm install
+npm test
+# En otra terminal, con npm run preview activo:
+npm run audit
 ```
 
-Qué regenera:
+`npm run audit` ejecuta Lighthouse en ambas páginas, móvil y escritorio. Exige más de 90 puntos en todas las categorías devueltas y guarda los informes HTML/JSON en `.cache/`. En otra plataforma, definir `CHROME_PATH` con la ruta de Chrome.
 
-| Salida | Fuente |
-|---|---|
-| `assets/og-image.jpg` (1200×630) | `assets/og-source.html` |
-| `assets/apple-touch-icon.png` (180×180) | `assets/icon-square.svg` |
-| `assets/icon-192.png`, `assets/icon-512.png` | `assets/icon-square.svg` |
-| `assets/favicon.ico` (16/32/48) | `assets/favicon.svg` |
+Los puntajes son mediciones de laboratorio sobre localhost. Deben repetirse sobre HTTPS en producción; latencia, caché del hosting y dispositivo pueden cambiar el rendimiento. El resultado de accesibilidad automatizado no sustituye una revisión humana ni constituye certificación WCAG.
 
-## 🚀 Publicar (gratis)
+La última ejecución y las comprobaciones manuales se documentan en `AUDIT.md`.
 
-Opción A — **GitHub Pages** (es la que está activa hoy):
-1. `git push` a `main`.
-2. *Settings → Pages → Deploy from a branch* → rama `main` / raíz.
+## Publicación y pendientes del negocio
 
-Opción B — **Netlify o Cloudflare Pages**: conectás el repo y publica solo.
+La URL pública configurada sigue siendo https://dfchanel-coder.github.io/topcarrivera/. Esta actualización se prepara en el checkout; no se publica automáticamente. Mantener `node_modules`, `.cache` y los reportes de auditoría fuera del despliegue. `.nojekyll` permite servir archivos estáticos en GitHub Pages.
 
-## 🌐 Dominio propio
+Antes de reemplazar los placeholders, usar fotografías del taller y del equipamiento con autorización. No presentar las imágenes de stock como personal o instalaciones reales. Reemplazar las variantes en `assets/photos/` conservando sus dimensiones y actualizar los textos alternativos y las etiquetas ilustrativas.
 
-El sitio funciona hoy en la URL de GitHub Pages (proyecto). Cuando se compre el dominio
-definitivo, hay que reemplazar la base en **estos archivos** (es el único cambio necesario):
+El horario de 8:30 a 18:30 proviene de la versión anterior y sigue pendiente de confirmación por el taller (el README anterior registraba fuentes externas en conflicto). Confirmar también feriados y cobertura del auxilio. Si cambia el horario, actualizar el contenido bilingüe, JSON-LD y `workshopStatus` y sus pruebas. No se afirma disponibilidad por feriados.
 
-| Archivo | Dónde |
-|---|---|
-| `index.html` | `canonical`, `og:url`, `twitter:url` y los `url`/`@id`/`image`/`logo` del JSON-LD |
-| `robots.txt` | línea `Sitemap:` |
-| `sitemap.xml` | `<loc>` y `<image:loc>` |
-| `llms.txt` | "Sitio web" y "Cómo citar este sitio" |
+Para completar el posicionamiento local fuera de la web: mantener el Perfil de Empresa de Google verificado, su categoría y servicios correctos, el mismo nombre/dirección/teléfono, fotos reales y reseñas genuinas. El sitio por sí solo no puede garantizar una posición en Google Maps ni en respuestas de IA.
 
-En el `<head>` de `index.html` hay un comentario `DOMINIO:` que recuerda exactamente esto.
-
-- Netlify / Cloudflare Pages: *Domain settings → Add custom domain*.
-- GitHub Pages: *Settings → Pages → Custom domain* + registro CNAME.
-
-El HTTPS se emite automáticamente en los tres casos.
-
-> **Nota sobre `robots.txt` y `sitemap.xml` en GitHub Pages:** en un sitio de proyecto
-> (`usuario.github.io/repo/`) estos archivos se sirven bajo el subdirectorio, y los buscadores
-> sólo leen `robots.txt` en la raíz del dominio. Es decir: **quedan plenamente efectivos al
-> conectar un dominio propio** (o al desplegar en Netlify/Cloudflare, donde viven en la raíz).
-
-## ✏️ Qué actualizar con datos confirmados
-
-Los datos reales actuales están tomados de Google Maps, 1122 y el Instagram del taller.
-Verificá y ajustá en `index.html`:
-
-| Dónde | Qué | Valor actual |
-|---|---|---|
-| `index.html` (schema + Ubicación + mapa) | Dirección | Paysandú 255, Rivera |
-| `index.html` (schema + Ubicación + FAQ) | Horario | Lunes a viernes 8:30–18:30 |
-| `index.html` (schema + footer) | E-mail | jonahiggie@gmail.com |
-| `js/main.js` → `SCHEDULE` | Horario (cartel "Abierto/Cerrado") | `[8.5, 18.5]` |
-
-> ⚠️ **El horario tiene dos fuentes en conflicto** (Google dice 8:00–18:30, el 1122 indica apertura 9:00).
-> Confirmar con el taller y actualizar en los **cuatro** lugares de la tabla.
->
-> Se quitó la coordenada `geo` del JSON-LD al cambiar la dirección: si pasás las coordenadas exactas
-> de Paysandú 255, se vuelven a agregar.
-
-## 🔁 Reemplazar los placeholders por material propio
-
-- **Fotos:** crear `assets/foto-taller.webp` y `assets/foto-portada.webp`, y usarlas en la sección
-  *El taller* (`<img>` en `.about-img`) y en el hero.
-- **Logo:** reemplazar `assets/logo.svg` y los bloques inline del `<header>` y del footer.
-- Todas las imágenes actuales son SVG/CSS generados: no hay fotos de stock ni licencias que pagar.
-
-## 🔎 SEO
-
-- `<title>` de 51 caracteres y `meta description` de 159, dentro de los límites de Google.
-- `canonical`, `robots` (`index, follow, max-image-preview:large`), Open Graph y Twitter Cards completos.
-- Datos estructurados JSON-LD (`@graph`): **WebSite**, **AutoRepair** (dirección, horarios, teléfono,
-  `areaServed`, `sameAs`, `contactPoint` y **catálogo de los 11 servicios**) y **FAQPage**.
-- Jerarquía de encabezados correcta (un `h1`, sin saltos de nivel) y **FAQ con acordeón nativo**
-  (`<details>`), que respalda el schema `FAQPage`.
-- `sitemap.xml` (con extensión de imagen) y `robots.txt`.
-
-## 🤖 GEO / LLMO (motores generativos)
-
-- **`llms.txt`** en la raíz: resumen en Markdown con NAP, horarios, servicios, FAQ y sugerencia de cita,
-  para que ChatGPT, Perplexity, Gemini y AI Overviews puedan leer y citar el negocio sin ambigüedad.
-- **`robots.txt`** con permisos explícitos para `GPTBot`, `OAI-SearchBot`, `ChatGPT-User`, `ClaudeBot`,
-  `PerplexityBot`, `Google-Extended`, `Applebot-Extended`, `Bingbot`, `Amazonbot`, `meta-externalagent`, `CCBot`.
-- Datos **consistentes** entre texto visible, JSON-LD y `llms.txt` (mismo nombre, dirección, teléfono,
-  horario y servicios en los tres lugares) — clave para que los modelos citen información correcta.
-
-## 🔗 Presentación al compartir el link
-
-- `og:image` apunta a **`assets/og-image.jpg`** (1200×630, JPEG) — WhatsApp, Facebook, X, Telegram e
-  Instagram **ignoran los SVG**, por eso la imagen es raster.
-- `og:image:width`, `og:image:height`, `og:image:type` y `og:image:alt` declarados; `twitter:card`
-  en `summary_large_image`.
-- Íconos completos: `favicon.ico` (16/32/48), `favicon.svg`, `apple-touch-icon.png` (180×180) y
-  `site.webmanifest` (192/512, `theme_color` rojo de marca).
-
-> Al cambiar la imagen social, algunos servicios guardan caché: se refresca desde el
-> [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) (también reindexa WhatsApp).
-
-## 🧾 Incluido por defecto
-
-- Diseño responsive (mobile-first), paleta roja y ritmo editorial de secciones claras/oscuras.
-- Tipografía **Montserrat** (títulos 800/900) + **Inter** (texto), micro-etiquetas con línea roja.
-- Sección destacada de **Auxilio 24 hs** (autos, camionetas y camiones pequeños) con CTA a WhatsApp/teléfono.
-- Hero con **disco de freno girando** en SVG animado (sin imágenes externas ni stock).
-- Botón flotante de WhatsApp + enlaces a Instagram y Facebook.
-- Accesibilidad: `prefers-reduced-motion`, `:focus-visible`, skip-link, landmarks ARIA,
-  acordeón nativo y contraste verificado (0 fallos).
-- Indicador en vivo "Abierto ahora / Cerrado" con la hora de Rivera (`America/Montevideo`).
-- Firma discreta **FB Informática** en el footer (según identidad de marca).
-
-## 📊 Auditoría (última corrida)
-
-| Chequeo | Resultado |
-|---|---|
-| Lighthouse — Accesibilidad | **100** |
-| Lighthouse — Buenas prácticas | **100** |
-| Lighthouse — SEO | **100** |
-| Errores de consola | 0 |
-| Contraste AA (escaneo propio elemento por elemento) | 0 fallos |
-| IDs duplicados | 0 |
-| Scroll horizontal en 375 px y 1000 px | No |
-| JSON-LD | Válido (WebSite · AutoRepair · FAQPage) |
-| Peso total del sitio | ~295 KB (incluye fuentes de imagen y assets generados) |
-
----
-
-Desarrollado por **[FB Informática](https://www.fbinformaticauy.com)**.
+Diseño y desarrollo: FB Informática — https://www.fbinformaticauy.com
