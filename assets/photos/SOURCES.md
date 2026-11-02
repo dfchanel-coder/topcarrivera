@@ -1,3 +1,5 @@
+> Archivo histórico: las fotos de stock descritas aquí ya no se utilizan en la landing. La selección actual está en `real/SOURCES.md`.
+
 # Fotografías ilustrativas
 
 Las fotografías son placeholders de Unsplash, no representan el taller ni su personal.

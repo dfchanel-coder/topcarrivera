@@ -13,11 +13,11 @@ npm run preview
 Abrir http://127.0.0.1:8123/topcarrivera/ o http://127.0.0.1:8123/topcarrivera/pt/.
 El servidor se limita a localhost y reproduce el subdirectorio de GitHub Pages. Detener con Ctrl+C.
 
-- `tools/build-site.py`: contenido español/portugués, metadatos, JSON-LD, sitemap y robots. Es la fuente de edición; no editar a mano los HTML generados.
+- `tools/build-site.py`: contenido español/portugués, metadatos, JSON-LD, sitemap y robots. `tools/real_photos.py` contiene los textos y metadatos de las fotografías reales y Auxilio BAIA. Es la fuente de edición; no editar a mano los HTML generados.
 - `css/styles.css`: diseño responsive, estados de foco y movimiento reducido.
 - `js/main.js`: menú, carrusel, búsqueda tolerante, horario y mapa bajo demanda.
 - `index.html` y `pt/index.html`: páginas completas indexables sin ejecutar JavaScript.
-- `assets/photos/`: imágenes ilustrativas WebP con variantes de 640, 960 y 1280 px. Procedencia en `SOURCES.md`.
+- `assets/photos/real/`: seis fotografías reales optimizadas, variantes de 480, 800 y hasta 1280 px sin ampliar el original; procedencia en `real/SOURCES.md`. Los originales de WhatsApp se mantienen locales, excluidos por `.gitignore`.
 - `assets/fonts/`: fuentes locales reducidas y licencias OFL.
 - `tools/validate-site.py`: comprobaciones de archivos, anclas, idioma, metadatos, JSON-LD, sitemap y robots.
 - `tools/hours.test.cjs`: pruebas de horarios y zona de Rivera, incluidos apertura, cierre y fin de semana.
@@ -57,7 +57,7 @@ Referencias oficiales:
 
 `tools/build-site.py` genera ambos archivos con la misma URL base que los canonical y los identificadores de la entidad.
 
-El sitemap incluye solo las dos páginas canónicas indexables. No incluye anclas, herramientas, fotos ilustrativas como páginas, prioridades inventadas ni frecuencias sin fundamento. Ambas entradas tienen los mismos alternates recíprocos. `lastmod` corresponde a la fecha de esta revisión de contenido; actualizarlo cuando cambie sustancialmente el contenido, no cada vez que se ejecute el generador.
+El sitemap incluye solo las dos páginas canónicas indexables y, dentro de ellas, las seis imágenes reales mediante la extensión de imágenes. No incluye anclas, herramientas, fotos ilustrativas como páginas, prioridades inventadas ni frecuencias sin fundamento. Ambas entradas tienen los mismos alternates recíprocos. `lastmod` corresponde a la fecha de esta revisión de contenido; actualizarlo cuando cambie sustancialmente el contenido, no cada vez que se ejecute el generador.
 
 `robots.txt` permite rastrear el contenido público y los recursos CSS/JS. El grupo `User-agent: *` también cubre crawlers de IA que respeten robots; no hace falta duplicar docenas de grupos equivalentes. Incluye la URL absoluta del sitemap. Permitir rastreo no garantiza indexación ni regula por sí solo los usos posteriores del contenido.
 
@@ -84,9 +84,11 @@ La última ejecución y las comprobaciones manuales se documentan en `AUDIT.md`.
 
 ## Publicación y pendientes del negocio
 
-La URL pública configurada sigue siendo https://dfchanel-coder.github.io/topcarrivera/. Esta actualización se prepara en el checkout; no se publica automáticamente. Mantener `node_modules`, `.cache` y los reportes de auditoría fuera del despliegue. `.nojekyll` permite servir archivos estáticos en GitHub Pages.
+La URL pública configurada sigue siendo https://dfchanel-coder.github.io/topcarrivera/. GitHub Pages publica la rama `main`; los cambios enviados al remoto disparan el despliegue. Mantener `node_modules`, `.cache` y los reportes de auditoría fuera del despliegue. `.nojekyll` permite servir archivos estáticos en GitHub Pages.
 
-Antes de reemplazar los placeholders, usar fotografías del taller y del equipamiento con autorización. No presentar las imágenes de stock como personal o instalaciones reales. Reemplazar las variantes en `assets/photos/` conservando sus dimensiones y actualizar los textos alternativos y las etiquetas ilustrativas.
+Desde el 02/11/2026 la portada, la sección técnica y el bloque de auxilio utilizan fotografías reales. Una galería de cuatro imágenes permite ampliarlas en un diálogo con controles, teclado y retorno del foco. Sin JavaScript los enlaces abren las imágenes. El nombre Auxilio BAIA aparece junto a TOP CAR en el bloque de asistencia, FAQ, metadatos, catálogo estructurado y llms.txt.
+
+Para regenerar las copias con los originales presentes: `python tools/prepare-photos.py` (requiere Pillow). Después ejecutar `npm run build`. La compilación habitual no necesita los JPEG originales ni Pillow: utiliza las variantes y el manifiesto ya incluidos. No subir automáticamente el llavero, capturas de WhatsApp o videos; agregar nuevas imágenes solo tras una selección. Los archivos antiguos de stock permanecen como material histórico y no se cargan en las páginas.
 
 El horario de 8:30 a 18:30 proviene de la versión anterior y sigue pendiente de confirmación por el taller (el README anterior registraba fuentes externas en conflicto). Confirmar también feriados y cobertura del auxilio. Si cambia el horario, actualizar el contenido bilingüe, JSON-LD y `workshopStatus` y sus pruebas. No se afirma disponibilidad por feriados.
 

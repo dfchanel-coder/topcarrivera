@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from html import escape
 from urllib.parse import quote
+from real_photos import REAL_COPY, PHOTOS, LIBRARY, photo, gallery
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = 'https://dfchanel-coder.github.io/topcarrivera/'
@@ -124,6 +125,11 @@ CONTENT = {
  }
 }
 
+for code, updates in REAL_COPY.items():
+ CONTENT[code].update(updates)
+ question, answer = CONTENT[code]['faqs'][3]
+ CONTENT[code]['faqs'][3] = [question, answer.replace('TOP CAR ofrece auxilio 24 hs', 'TOP CAR y Auxilio BAIA ofrecen asistencia y traslado 24 hs').replace('a TOP CAR oferece socorro 24h', 'a TOP CAR e o Auxilio BAIA oferecem socorro e transporte 24h')]
+
 ICONS = [
  '<rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5M6 10h3l2-4 3 7 2-3h2"/>',
  '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="m7 5 2 3m8-3-2 3m-8 11 2-3m8 3-2-3"/>',
@@ -141,12 +147,13 @@ def build(code, d):
  other = '../' if code == 'pt' else 'pt/'
  normal = wa(d['wanormal'])
  biz = {'@type':'AutoRepair','@id':BASE+'#business','name':'TOP CAR — Mecánica Automotriz','alternateName':'TOP CAR Rivera','url':BASE,
-  'logo':BASE+'assets/icon-512.png','image':BASE+'assets/og-image.jpg', 'telephone':PHONE,'email':'jonahiggie@gmail.com',
+  'logo':BASE+'assets/icon-512.png','image':[BASE+LIBRARY[name]['variants'][-1]['src'] for name in ['taller-en-actividad','fachada','auxilio-baia']], 'telephone':PHONE,'email':'jonahiggie@gmail.com',
   'description':d['description'], 'address':{'@type':'PostalAddress','streetAddress':'Paysandú 255','addressLocality':'Rivera','addressRegion':'Rivera','postalCode':'40000','addressCountry':'UY'},
   'hasMap':MAP,'areaServed':{'@type':'City','name':'Rivera, Uruguay'},
   'openingHoursSpecification':[{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday'],'opens':'08:30','closes':'18:30'}],
   'sameAs':['https://www.instagram.com/topcar.rivera/','https://www.facebook.com/1347989881946981'],
   'hasOfferCatalog':{'@type':'OfferCatalog','name':d['nav'][0],'itemListElement':[{'@type':'Offer','itemOffered':{'@type':'Service','name':s[0],'description':s[2],'provider':{'@id':BASE+'#business'}}} for s in d['services']]}}
+ biz['hasOfferCatalog']['itemListElement'].append({'@type':'Offer','itemOffered':{'@type':'Service','name':'Auxilio BAIA — '+('socorro e guincho 24h' if code=='pt' else 'auxilio y traslado 24 hs'),'description':d['emergencytext'],'provider':{'@id':BASE+'#business'}}})
  schema={'@context':'https://schema.org','@graph':[biz,{'@type':'WebSite','@id':BASE+'#website','url':BASE,'name':'TOP CAR Rivera','inLanguage':['es-UY','pt-BR'],'publisher':{'@id':BASE+'#business'}},
   {'@type':'WebPage','@id':url+'#webpage','url':url,'name':d['title'],'description':d['description'],'inLanguage':d['lang'],'isPartOf':{'@id':BASE+'#website'},'about':{'@id':BASE+'#business'}},
   {'@type':'FAQPage','@id':url+'#faq','inLanguage':d['lang'],'mainEntity':[{'@type':'Question','name':q,'acceptedAnswer':{'@type':'Answer','text':a}} for q,a in d['faqs']]}]}
@@ -155,7 +162,9 @@ def build(code, d):
  points=''.join(f'<li><span class="point-index">0{i+1}</span><div><h3>{t}</h3><p>{p}</p></div></li>' for i,(t,p) in enumerate(d['technicalpoints']))
  steps=''.join(f'<li><span class="step-number">0{i+1}</span><h3>{t}</h3><p>{p}</p></li>' for i,(t,p) in enumerate(d['steps']))
  faqs=''.join(f'<details><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>' for q,a in d['faqs'])
- slides=''.join(f'''<figure class="hero-slide{' is-active' if i==0 else ''}" aria-hidden="{'false' if i==0 else 'true'}"><img {'src' if i==0 else 'data-src'}="{prefix}assets/photos/{name}-1280.webp" {'srcset' if i==0 else 'data-srcset'}="{prefix}assets/photos/{name}-640.webp 640w, {prefix}assets/photos/{name}-960.webp 960w, {prefix}assets/photos/{name}-1280.webp 1280w" sizes="(max-width: 760px) 100vw, 58vw" width="1280" height="960" alt="{d['slidealts'][i]}" {'fetchpriority="high"' if i==0 else 'decoding="async"'}><figcaption>{d['slidecaptions'][i]}</figcaption></figure>''' for i,name in enumerate(['workshop','precision']))
+ slides=''.join(f'<figure class="hero-slide{" is-active" if i==0 else ""}" aria-hidden="{"false" if i==0 else "true"}">{photo(name,code,prefix,"(max-width:760px) 100vw, 58vw",lazy=False,deferred=i>0)}<figcaption>{d["slidecaptions"][i]}</figcaption></figure>' for i,name in enumerate(['taller-en-actividad','frenos']))
+ gallery_html=gallery(code,d,prefix)
+
  html=f'''<!doctype html>
 <html lang="{d['lang']}"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -175,14 +184,15 @@ def build(code, d):
 <div class="hero-media" role="region" aria-roledescription="{'carrossel' if code=='pt' else 'carrusel'}" aria-label="{'Mecânica em detalhe' if code=='pt' else 'Mecánica en detalle'}">{slides}<div class="photo-corner"><span>TOP CAR / TECHNICAL CARE</span><span class="corner-cross" aria-hidden="true">+</span></div><div class="hero-photo-label">{d['illustrative']}</div><div class="carousel-controls" hidden><span class="slide-count" aria-live="off">01 <span>/ 02</span></span><button data-carousel="previous" aria-label="{d['previous']}">←</button><button data-carousel="pause" aria-label="{d['pause']}" data-pause="{d['pause']}" data-play="{d['play']}"><span aria-hidden="true">Ⅱ</span></button><button data-carousel="next" aria-label="{d['next']}">→</button></div><div class="hero-media-rule" aria-hidden="true"></div></div></section>
 <div class="trust-strip"><div class="container">{''.join(f'<span><i aria-hidden="true">+</i>{x}</span>' for x in d['ribbon'])}</div></div>
 <section class="section services" id="servicios" aria-labelledby="services-title"><div class="container"><div class="section-heading"><div><p class="eyebrow">{d['serviceeyebrow']}</p><h2 id="services-title">{d['servicetitle']}</h2></div><p class="section-intro">{d['serviceintro']}</p></div><div class="service-search" hidden><label for="service-query">{d['searchlabel']}</label><div class="search-box"><span aria-hidden="true">⌕</span><input id="service-query" type="search" placeholder="{d['searchplaceholder']}" aria-describedby="search-help" maxlength="100" autocomplete="off"><button id="clear-search" aria-label="{d['clear']}">×</button></div><p id="search-help">{d['searchhelp']}</p><div class="search-chips">{''.join(f'<button type="button" data-query="{x}">{x}<span aria-hidden="true">↗</span></button>' for x in d['chips'])}</div><p class="sr-only" id="search-status" role="status"></p></div><div class="service-grid">{cards}</div><div class="no-results" hidden><p>{d['noresults']}</p><a class="text-link" href="{normal}" target="_blank" rel="noopener">WhatsApp ↗</a></div><p class="search-note" hidden>{d['searchdisclaimer']}</p></div></section>
-<section class="section technical" id="taller" aria-labelledby="technical-title"><div class="container technical-grid"><div class="technical-photo"><img src="{prefix}assets/photos/precision-960.webp" srcset="{prefix}assets/photos/precision-640.webp 640w, {prefix}assets/photos/precision-960.webp 960w" sizes="(max-width:760px) 90vw, 45vw" alt="{d['slidealts'][1]}" width="960" height="720" loading="lazy" decoding="async"><span class="image-note">{d['illustrative']}</span><div class="photo-stamp">{d['technicalstamp']}<span aria-hidden="true">↗</span></div></div><div class="technical-copy"><p class="eyebrow">{d['technicaleyebrow']}</p><h2 id="technical-title">{d['technicaltitle']}</h2><p>{d['technicalintro']}</p><ul class="technical-points">{points}</ul></div></div></section>
+<section class="section technical" id="taller" aria-labelledby="technical-title"><div class="container technical-grid"><div class="technical-photo">{photo('embrague',code,prefix,'(max-width:760px) 90vw, 45vw')}<span class="image-note">{d['illustrative']}</span><div class="photo-stamp">{d['technicalstamp']}<span aria-hidden="true">↗</span></div></div><div class="technical-copy"><p class="eyebrow">{d['technicaleyebrow']}</p><h2 id="technical-title">{d['technicaltitle']}</h2><p>{d['technicalintro']}</p><ul class="technical-points">{points}</ul></div></div></section>
+{gallery_html}
 <section class="section process" id="proceso"><div class="container"><div class="section-heading"><div><p class="eyebrow">{d['processlabel']}</p><h2>{d['processtitle']}</h2></div><a class="text-link" href="{normal}" target="_blank" rel="noopener">{d['book']} ↗</a></div><ol class="steps">{steps}</ol></div></section>
-<section class="emergency" id="auxilio" aria-labelledby="emergency-title"><div class="container emergency-grid"><div><p class="eyebrow">{d['emergencyeyebrow']}</p><h2 id="emergency-title">{d['emergencytitle']}</h2><p>{d['emergencytext']}</p><div class="emergency-actions"><a class="btn btn-white" href="tel:{PHONE}">{d['call']} <span aria-hidden="true">↗</span></a><a class="text-link" href="{wa(d['waemergency'])}" target="_blank" rel="noopener">WhatsApp ↗</a></div><small>{d['emergencynote']}</small></div><div class="emergency-number" aria-hidden="true">24<span>HS / TOP CAR</span></div></div></section>
+<section class="emergency" id="auxilio" aria-labelledby="emergency-title"><div class="container emergency-grid"><div><p class="eyebrow">{d['emergencyeyebrow']}</p><h2 id="emergency-title">{d['emergencytitle']}</h2><p>{d['emergencytext']}</p><div class="emergency-actions"><a class="btn btn-white" href="tel:{PHONE}">{d['call']} <span aria-hidden="true">↗</span></a><a class="text-link" href="{wa(d['waemergency'])}" target="_blank" rel="noopener">WhatsApp ↗</a></div><small>{d['emergencynote']}</small></div><figure class="emergency-photo">{photo('auxilio-baia',code,prefix,'(max-width:760px) 90vw, 48vw')}<figcaption><strong>AUXILIO BAIA</strong><span>{'ASISTENCIA Y TRASLADO · 24 HS' if code=='es' else 'SOCORRO E TRANSPORTE · 24H'}</span></figcaption></figure></div></section>
 <section class="section border-section" id="frontera"><div class="container border-grid"><div><p class="eyebrow">{d['borderlabel']}</p><h2>{d['bordertitle']}</h2><div class="border-coordinate"><span>UY</span><span class="border-line"></span><span>BR</span></div></div><div class="border-copy"><p>{d['bordertext']}</p><p class="border-terms">{d['borderterms']}</p><a class="text-link" href="{other}" lang="{d['borderlanguage']}" hreflang="{d['borderlanguage']}">{d['borderlink']} ↗</a><div class="border-visit"><h3>{d['borderquestion']}</h3><p>{d['borderanswer']}</p></div></div></div></section>
 <section class="section location" id="ubicacion"><div class="container location-grid"><div><p class="eyebrow">{d['locationlabel']}</p><h2>{d['locationtitle']}</h2><div class="location-detail"><span class="micro">{d['addresslabel']}</span><address>Paysandú 255<br>Rivera, Uruguay</address></div><div class="location-detail"><span class="micro">{d['hourslabel']}</span><p>{d['hoursfull']}<br><small>{d['weekend']}</small></p><p class="open-status" id="openStatus" aria-live="polite"></p></div><a class="text-link" href="tel:{PHONE}">+598 98 738 689 ↗</a></div><div class="map-card"><div class="map-grid" aria-hidden="true"><div class="map-road road-one"></div><div class="map-road road-two"></div><div class="map-pin">TC<span></span></div><span class="map-street">PAYSANDÚ 255</span><span class="map-city">RIVERA / UY</span></div><div class="map-caption"><strong>TOP CAR</strong><a class="btn btn-small" href="{MAP}" target="_blank" rel="noopener">{d['directions']} ↗</a></div><div class="map-slot" id="map-slot"></div><button class="map-load" data-title="{d['maptitle']}" hidden>{d['mapload']} <span aria-hidden="true">+</span></button><p class="map-privacy">{d['mapprivacy']}</p></div></div></section>
 <section class="section faq" id="faq"><div class="container faq-grid"><div><p class="eyebrow">{d['faqlabel']}</p><h2>{d['faqtitle']}</h2></div><div class="faq-list">{faqs}</div></div></section>
 <section class="closing" id="contacto"><div class="container"><p class="eyebrow">TOP CAR / RIVERA</p><h2>{d['ctatitle']}</h2><p>{d['ctatext']}</p><div class="closing-actions"><a class="btn" href="{normal}" target="_blank" rel="noopener">{d['book']} ↗</a><a class="text-link" href="mailto:jonahiggie@gmail.com">{d['email']} ↗</a></div></div></section></main>
-<footer><div class="container footer-main"><div><a class="brand" href="{prefix or './'}">TOP<span>CAR</span></a><p>{d['footer']}</p></div><nav aria-label="{'Links do rodapé' if code=='pt' else 'Enlaces del pie'}">{nav}</nav><div class="footer-social"><a href="https://www.instagram.com/topcar.rivera/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/1347989881946981" target="_blank" rel="noopener">Facebook ↗</a><a href="{normal}" target="_blank" rel="noopener">WhatsApp ↗</a></div></div><div class="container footer-bottom"><span>© <span id="year">2026</span> TOP CAR · Rivera, Uruguay</span><span>{d['illustrative']} · Unsplash</span><span>{d['credit']}: <a href="https://www.fbinformaticauy.com" target="_blank" rel="noopener">FB Informática ↗</a></span></div></footer>
+<footer><div class="container footer-main"><div><a class="brand" href="{prefix or './'}">TOP<span>CAR</span></a><p>{d['footer']}</p></div><nav aria-label="{'Links do rodapé' if code=='pt' else 'Enlaces del pie'}">{nav}</nav><div class="footer-social"><a href="https://www.instagram.com/topcar.rivera/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/1347989881946981" target="_blank" rel="noopener">Facebook ↗</a><a href="{normal}" target="_blank" rel="noopener">WhatsApp ↗</a></div></div><div class="container footer-bottom"><span>© <span id="year">2026</span> TOP CAR · Rivera, Uruguay</span><span>{'Fotos de nuestro taller y auxilio' if code=='es' else 'Fotos da nossa oficina e do socorro'}</span><span>{d['credit']}: <a href="https://www.fbinformaticauy.com" target="_blank" rel="noopener">FB Informática ↗</a></span></div></footer>
 <div class="mobile-contact"><a href="tel:{PHONE}">{d['ribbon'][3]} ↗</a><a href="{normal}" target="_blank" rel="noopener">WhatsApp ↗</a></div>
 </body></html>'''
  dest=ROOT / ('pt/index.html' if code=='pt' else 'index.html')
@@ -193,12 +203,13 @@ if __name__ == '__main__':
  for code,data in CONTENT.items(): build(code,data)
  entries='\n'.join(f'''  <url>
     <loc>{BASE}{suffix}</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="es-UY" href="{BASE}" />
     <xhtml:link rel="alternate" hreflang="pt-BR" href="{BASE}pt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="{BASE}" />
+    {''.join('<image:image><image:loc>'+BASE+LIBRARY[name]['variants'][-1]['src']+'</image:loc></image:image>' for name in LIBRARY)}
   </url>''' for suffix in ['', 'pt/'])
- (ROOT/'sitemap.xml').write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n{entries}\n</urlset>\n',encoding='utf-8')
+ (ROOT/'sitemap.xml').write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:xhtml="http://www.w3.org/1999/xhtml"\n        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n{entries}\n</urlset>\n',encoding='utf-8')
  (ROOT/'robots.txt').write_text(f'''# TOP CAR - Rivera, Uruguay
 # Public search and AI crawlers may access public content and rendering assets.
 # robots.txt must be served at the origin root to be effective.
@@ -209,8 +220,8 @@ Sitemap: {BASE}sitemap.xml
 ''',encoding='utf-8')
  lines=['# TOP CAR — Mecánica Automotriz en Rivera', '', '> Taller mecánico en Paysandú 255, Rivera, Uruguay. Oficina mecânica em Rivera, na fronteira com Santana do Livramento.','', '## Páginas oficiales', f'- [Español]({BASE})',f'- [Português]({BASE}pt/)','','## Contacto y ubicación','- Dirección: Paysandú 255, Rivera, Uruguay.','- Teléfono y WhatsApp: +598 98 738 689.','- E-mail: jonahiggie@gmail.com.','- Horario habitual: lunes a viernes de 08:30 a 18:30, America/Montevideo. Consultar feriados.','- Sábados y domingos: taller cerrado. Auxilio 24 hs para autos, camionetas y camiones pequeños.','- Confirmar disponibilidad y cobertura del auxilio por teléfono. No se declara cobertura en Brasil.','- El local está en Uruguay, no en Santana do Livramento.','','## Servicios']
  for es,pt in zip(CONTENT['es']['services'],CONTENT['pt']['services']): lines.append(f'- {es[0]} / {pt[0]}: {es[2]}')
- lines += ['', '## Preguntas y respuestas']
+ lines += ['', '## Auxilio BAIA', 'TOP CAR incorpora el nombre Auxilio BAIA, un servicio de grúa y auxilio con trayectoria en Rivera. Asistencia 24 hs y traslado de vehículos. Coordinar disponibilidad y cobertura al +598 98 738 689.', '', '## Preguntas y respuestas']
  for question,answer in CONTENT['es']['faqs']: lines += [f'### {question}',answer,'']
- lines += ['## Alcance de la información','- Fotografías de stock ilustrativas: no son fotos del local ni del personal de TOP CAR.','- No se publican títulos de ingeniería, certificaciones, precios, marcas de herramientas ni calificaciones sin verificar.','- El diagnóstico y el presupuesto dependen de la inspección del vehículo.','- Este resumen facilita la lectura; no garantiza indexación, posicionamiento ni citas por asistentes.']
+ lines += ['## Alcance de la información','- Fotografías reales del taller, trabajos mecánicos y grúa de Auxilio BAIA, proporcionadas por el negocio.','- No se publican títulos de ingeniería, certificaciones, precios, marcas de herramientas ni calificaciones sin verificar.','- El diagnóstico y el presupuesto dependen de la inspección del vehículo.','- Este resumen facilita la lectura; no garantiza indexación, posicionamiento ni citas por asistentes.']
  (ROOT/'llms.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8')
  print('Built index.html and pt/index.html')

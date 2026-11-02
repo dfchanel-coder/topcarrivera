@@ -16,3 +16,39 @@
 @media print{.topline,.nav-actions,.hero-media,.carousel-controls,.service-search,.mobile-contact,.map-load,.closing,.footer-social{display:none!important}.site-header{position:static}body,.technical,.emergency,footer{background:white!important;color:#111!important}.hero{display:block;background:white;color:#111}.hero-copy{padding:30px}.hero-intro,.technical-copy>p:not(.eyebrow),.technical-points p{color:#333}.section{padding:30px 0}.container{width:100%}a{color:#111}.service-card,details{break-inside:avoid}.technical-photo{height:250px}h1{font-size:60px}h2{font-size:38px}}
 
 .service-grid.is-filtered{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+/* Real workshop photography — preserve the subject, never simulate equipment. */
+.hero-slide img{filter:none;object-position:50% 48%}
+.hero-slide:nth-child(2) img{object-position:50% 50%}
+.technical-photo>img{filter:none;object-position:50% 42%}
+.photo-corner>span:first-child{background:#111314c9;padding:5px 8px;text-shadow:none}
+.workshop-gallery{background:#ecebe6;border-bottom:1px solid var(--line)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.gallery-item{min-width:0}
+.gallery-link{display:block;position:relative;background:#222;overflow:hidden}
+.gallery-link img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;transition:transform .5s ease}
+.gallery-link:hover img{transform:scale(1.035)}
+.gallery-item:first-child img{object-position:60% center}
+.photo-expand{position:absolute;bottom:14px;right:14px;width:40px;height:40px;background:var(--paper);color:var(--ink);display:grid;place-items:center;font-size:23px}
+.gallery-item figcaption{padding-top:13px;font-size:12px;font-weight:700}
+.gallery-hint{font-size:11px;color:var(--muted);margin-top:24px}
+.emergency-grid{grid-template-columns:1fr 1.15fr;gap:55px}
+.emergency-photo{position:relative;min-width:0;background:#141719;box-shadow:0 18px 35px #4c06152b}
+.emergency-photo>img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.emergency-photo figcaption{padding:18px 22px;background:var(--dark);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.emergency-photo strong{font:800 29px/1 var(--display)}
+.emergency-photo figcaption span{font-size:8px;letter-spacing:.1em;color:#ddd;max-width:140px;text-align:right}
+body:has(.photo-dialog[open]){overflow:hidden}
+.photo-dialog{width:min(1060px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:54px 22px 18px;border:1px solid #53575b;background:#111314;color:#fff;overflow:auto}
+.photo-dialog::backdrop{background:#080a0bed;backdrop-filter:blur(6px)}
+.photo-dialog figure{margin:0}
+.photo-full{display:block;width:100%;height:min(68dvh,760px);object-fit:contain;background:#0b0d0e}
+.photo-dialog figcaption{text-align:center;font-size:13px;margin-top:16px;line-height:1.6;min-height:22px}
+.photo-close{position:absolute;right:12px;top:7px;width:44px;height:44px;background:transparent;color:#fff;font-size:30px}
+.photo-navigation{display:flex;align-items:center;justify-content:center;gap:26px;margin-top:14px}
+.photo-navigation button{width:44px;height:44px;border:1px solid #74777a;background:transparent;color:white;font-size:22px}
+.photo-navigation button:hover,.photo-close:hover{background:var(--red)}
+.photo-index{font-size:12px;color:#ddd}
+@media(max-width:1000px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.gallery-link img{aspect-ratio:4/3}.emergency-grid{gap:30px}}
+@media(max-width:760px){.emergency-grid{grid-template-columns:1fr;gap:32px}.emergency-photo strong{font-size:27px}.photo-dialog{padding:52px 12px 16px}.photo-full{height:62dvh}.hero-slide img{object-position:50% 52%}}
+@media(max-width:600px){.gallery-grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 18px;margin:-4px}.gallery-item{scroll-snap-align:start}.gallery-link img{aspect-ratio:3/4}.gallery-item:first-child img{object-position:55% center}}
+@media print{.photo-dialog{display:none!important}.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}.gallery-link img{height:180px}.emergency-photo figcaption{background:white;color:#111}}

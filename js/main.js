@@ -84,6 +84,44 @@ if (typeof module !== 'undefined') module.exports = { workshopStatus };
   updatePause();
   window.addEventListener('load', schedule, { once: true });
 
+  // Real photos open in a native modal; links still work if JavaScript is unavailable.
+  const photoLinks = [...document.querySelectorAll('.gallery-link')];
+  const photoDialog = document.querySelector('.photo-dialog');
+  if (photoDialog && typeof photoDialog.showModal === 'function') {
+    const full = photoDialog.querySelector('.photo-full');
+    const caption = document.getElementById('photo-caption');
+    let photoIndex = 0, opener = null;
+    const displayPhoto = index => {
+      photoIndex = (index + photoLinks.length) % photoLinks.length;
+      const link = photoLinks[photoIndex];
+      const thumb = link.querySelector('img');
+      full.alt = thumb.alt;
+      full.width = Number(thumb.getAttribute('width'));
+      full.height = Number(thumb.getAttribute('height'));
+      full.src = link.href;
+      caption.textContent = link.dataset.caption;
+      photoDialog.querySelector('.photo-index').textContent = `${photoIndex + 1} / ${photoLinks.length}`;
+    };
+    photoLinks.forEach((link, index) => link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      opener = link;
+      displayPhoto(index);
+      photoDialog.showModal();
+      photoDialog.querySelector('.photo-close').focus();
+    }));
+    photoDialog.querySelector('.photo-close').addEventListener('click', () => photoDialog.close());
+    photoDialog.querySelectorAll('[data-photo-step]').forEach(button => button.addEventListener('click', () => displayPhoto(photoIndex + Number(button.dataset.photoStep))));
+    photoDialog.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        displayPhoto(photoIndex + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    photoDialog.addEventListener('click', event => { if (event.target === photoDialog) photoDialog.close(); });
+    photoDialog.addEventListener('close', () => opener?.focus({preventScroll:true}));
+  }
+
   // Search-only aliases; no hidden SEO keywords or duplicated doorway content.
   const aliases = {
     diagnostico: 'diagnostico computarizado escaner scanner scaner automotriz inyeccion injecao injeccion injeção eletronica electronica sensores bobinas inyectores bicos check engine luz motor tablero painel perde fuerza pierde forca falhando falha falla tironea ratea consumo gasolina nafta',

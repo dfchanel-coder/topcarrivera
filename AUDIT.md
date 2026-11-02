@@ -1,3 +1,23 @@
+# Actualización auditada — 02/11/2026
+
+Se incorporaron seis fotos reales y Auxilio BAIA en ambas versiones. Las pruebas se ejecutaron sobre el estado final de esta actualización, sin excluir reglas.
+
+| Idioma | Dispositivo | Rendimiento | Accesibilidad | Buenas prácticas | SEO | Agentic browsing |
+|---|---|---:|---:|---:|---:|---:|
+| es | mobile | 98 | 100 | 100 | 100 | 98 |
+| es | desktop | 100 | 100 | 100 | 100 | 100 |
+| pt | mobile | 99 | 100 | 100 | 100 | 98 |
+| pt | desktop | 100 | 100 | 100 | 100 | 100 |
+
+LCP móvil 1,1 s, escritorio 0,6 s. CLS móvil 0,08, escritorio 0. Mediciones de laboratorio en localhost; no garantizan idénticos resultados en producción.
+
+Verificaciones adicionales: 10 pruebas de horario; 70 referencias locales; todos los srcset; sitemap bilingüe con seis imágenes por URL; catálogo con Auxilio BAIA; cuatro enlaces de galería por idioma. Visor comprobado con flechas, cierre, Escape y retorno del foco. Sin imágenes rotas ni errores de consola durante la revisión. Sin desborde de página en 390 px.
+
+Los originales del usuario no se modificaron. Los videos y el llavero no se publican. La asociación y trayectoria de BAIA fueron informadas por el usuario, sin inventar años ni fecha de fundación.
+
+---
+
+## Auditoría anterior (histórico)
 # Auditoría TOP CAR — 30/10/2026
 
 Revisión local del rediseño bilingüe. No se realizó publicación ni una auditoría del hosting público.

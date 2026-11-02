@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://dfchanel-coder.github.io/topcarrivera/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="es-UY" href="https://dfchanel-coder.github.io/topcarrivera/" />
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dfchanel-coder.github.io/topcarrivera/pt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dfchanel-coder.github.io/topcarrivera/" />
+    <image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/taller-en-actividad-1080.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/frenos-900.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/embrague-900.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/fachada-1280.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/interior-900.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/auxilio-baia-1280.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://dfchanel-coder.github.io/topcarrivera/pt/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="es-UY" href="https://dfchanel-coder.github.io/topcarrivera/" />
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dfchanel-coder.github.io/topcarrivera/pt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dfchanel-coder.github.io/topcarrivera/" />
+    <image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/taller-en-actividad-1080.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/frenos-900.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/embrague-900.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/fachada-1280.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/interior-900.webp</image:loc></image:image><image:image><image:loc>https://dfchanel-coder.github.io/topcarrivera/assets/photos/real/auxilio-baia-1280.webp</image:loc></image:image>
   </url>
 </urlset>

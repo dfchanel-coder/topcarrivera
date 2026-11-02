@@ -13,3 +13,8 @@ dist/
 .idea/
 .env
 .env.local
+
+# Original client media stays local; publish selected optimized copies only.
+/WhatsApp Image *.jpeg
+/WhatsApp Video *.mp4
+__pycache__/

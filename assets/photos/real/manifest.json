@@ -1,0 +1,122 @@
+{
+  "taller-en-actividad": {
+    "source": "WhatsApp Image 2026-11-02 at 09.13.10 (2).jpeg",
+    "variants": [
+      {
+        "src": "assets/photos/real/taller-en-actividad-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "src": "assets/photos/real/taller-en-actividad-800.webp",
+        "width": 800,
+        "height": 1067
+      },
+      {
+        "src": "assets/photos/real/taller-en-actividad-1080.webp",
+        "width": 1080,
+        "height": 1440
+      }
+    ]
+  },
+  "frenos": {
+    "source": "WhatsApp Image 2026-11-02 at 09.13.14.jpeg",
+    "variants": [
+      {
+        "src": "assets/photos/real/frenos-480.webp",
+        "width": 480,
+        "height": 853
+      },
+      {
+        "src": "assets/photos/real/frenos-800.webp",
+        "width": 800,
+        "height": 1422
+      },
+      {
+        "src": "assets/photos/real/frenos-900.webp",
+        "width": 900,
+        "height": 1600
+      }
+    ]
+  },
+  "embrague": {
+    "source": "WhatsApp Image 2026-11-02 at 09.13.08 (2).jpeg",
+    "variants": [
+      {
+        "src": "assets/photos/real/embrague-480.webp",
+        "width": 480,
+        "height": 853
+      },
+      {
+        "src": "assets/photos/real/embrague-800.webp",
+        "width": 800,
+        "height": 1422
+      },
+      {
+        "src": "assets/photos/real/embrague-900.webp",
+        "width": 900,
+        "height": 1600
+      }
+    ]
+  },
+  "fachada": {
+    "source": "WhatsApp Image 2026-11-02 at 09.13.09.jpeg",
+    "variants": [
+      {
+        "src": "assets/photos/real/fachada-480.webp",
+        "width": 480,
+        "height": 360
+      },
+      {
+        "src": "assets/photos/real/fachada-800.webp",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "assets/photos/real/fachada-1280.webp",
+        "width": 1280,
+        "height": 960
+      }
+    ]
+  },
+  "interior": {
+    "source": "WhatsApp Image 2026-11-02 at 09.13.11.jpeg",
+    "variants": [
+      {
+        "src": "assets/photos/real/interior-480.webp",
+        "width": 480,
+        "height": 853
+      },
+      {
+        "src": "assets/photos/real/interior-800.webp",
+        "width": 800,
+        "height": 1422
+      },
+      {
+        "src": "assets/photos/real/interior-900.webp",
+        "width": 900,
+        "height": 1600
+      }
+    ]
+  },
+  "auxilio-baia": {
+    "source": "WhatsApp Image 2026-11-02 at 09.13.13.jpeg",
+    "variants": [
+      {
+        "src": "assets/photos/real/auxilio-baia-480.webp",
+        "width": 480,
+        "height": 360
+      },
+      {
+        "src": "assets/photos/real/auxilio-baia-800.webp",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "src": "assets/photos/real/auxilio-baia-1280.webp",
+        "width": 1280,
+        "height": 960
+      }
+    ]
+  }
+}

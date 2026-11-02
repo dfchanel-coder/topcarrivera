@@ -35,11 +35,17 @@ for filename,language in [('index.html','es-UY'),('pt/index.html','pt-BR')]:
     assert local.exists(), f'{filename}: missing {value}'
    elif target.fragment: assert target.fragment in page.ids, f'Broken anchor {value}'
    count+=1
+  for key in ['srcset','data-srcset']:
+   for candidate in a.get(key,'').split(','):
+    if candidate.strip(): assert (path.parent/candidate.strip().split()[0]).exists(), candidate
  data=json.loads(page.schema)
  graph=data['@graph']; business=next(x for x in graph if x['@type']=='AutoRepair')
  assert business['telephone']=='+59898738689'
  assert business['address']['streetAddress']=='Paysandú 255'
  assert 'aggregateRating' not in business
+ assert any('BAIA' in offer['itemOffered']['name'] for offer in business['hasOfferCatalog']['itemListElement'])
+ assert len([a for t,a in page.nodes if t=='a' and a.get('class')=='gallery-link'])==4
+ assert 'Unsplash' not in path.read_text(encoding='utf-8')
  assert len(next(x for x in graph if x['@type']=='FAQPage')['mainEntity'])==6
  links=[a for t,a in page.nodes if t=='link']
  assert len([a for a in links if a.get('rel')=='canonical'])==1
@@ -53,7 +59,13 @@ urls=sitemap.findall('s:url',ns)
 assert {u.find('s:loc',ns).text for u in urls}=={base,base+'pt/'}
 for url in urls:
  assert {x.get('hreflang'):x.get('href') for x in url.findall('x:link',ns)}=={'es-UY':base,'pt-BR':base+'pt/','x-default':base}
- assert url.find('s:lastmod',ns).text=='2026-10-30'
+ assert url.find('s:lastmod',ns).text=='2026-11-02'
+ images=url.findall('{http://www.google.com/schemas/sitemap-image/1.1}image')
+ assert len(images)==6
+ for image in images:
+  location=image.find('{http://www.google.com/schemas/sitemap-image/1.1}loc').text
+  assert location.startswith(base)
+  assert (ROOT/location.removeprefix(base)).exists()
 robots=(ROOT/'robots.txt').read_text(encoding='utf-8')
 assert f'Sitemap: {base}sitemap.xml' in robots
 assert 'User-agent: *\nAllow: /' in robots
