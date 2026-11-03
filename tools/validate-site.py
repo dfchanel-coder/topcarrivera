@@ -6,6 +6,7 @@ import json
 import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parent.parent
+base='https://topcarrivera.com/'
 class Page(HTMLParser):
  def __init__(self):
   super().__init__(); self.nodes=[]; self.ids=[]; self.schema=''; self.in_schema=False; self.h1=0
@@ -49,17 +50,23 @@ for filename,language in [('index.html','es-UY'),('pt/index.html','pt-BR')]:
  assert len(next(x for x in graph if x['@type']=='FAQPage')['mainEntity'])==6
  links=[a for t,a in page.nodes if t=='link']
  assert len([a for a in links if a.get('rel')=='canonical'])==1
+ expected_url=base+('pt/' if language=='pt-BR' else '')
+ assert next(a['href'] for a in links if a.get('rel')=='canonical')==expected_url
+ meta={a.get('property',a.get('name')):a.get('content') for t,a in page.nodes if t=='meta'}
+ assert meta['og:url']==expected_url
+ assert meta['og:image']==meta['twitter:image']==base+'assets/og-image.jpg'
+ assert (ROOT/'assets/og-image.jpg').is_file()
+ assert 'dfchanel-coder.github.io' not in path.read_text(encoding='utf-8')
  assert set(a['hreflang'] for a in links if 'hreflang' in a)=={'es-UY','pt-BR','x-default'}
  assert '<iframe' not in path.read_text(encoding='utf-8'), 'Map should be interaction-loaded'
  print(filename, 'PASS: structure, assets, anchors, locales and schema')
 sitemap=ET.parse(ROOT/'sitemap.xml')
 ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9','x':'http://www.w3.org/1999/xhtml'}
-base='https://dfchanel-coder.github.io/topcarrivera/'
 urls=sitemap.findall('s:url',ns)
 assert {u.find('s:loc',ns).text for u in urls}=={base,base+'pt/'}
 for url in urls:
  assert {x.get('hreflang'):x.get('href') for x in url.findall('x:link',ns)}=={'es-UY':base,'pt-BR':base+'pt/','x-default':base}
- assert url.find('s:lastmod',ns).text=='2026-11-02'
+ assert url.find('s:lastmod',ns).text=='2026-11-03'
  images=url.findall('{http://www.google.com/schemas/sitemap-image/1.1}image')
  assert len(images)==6
  for image in images:
@@ -67,6 +74,7 @@ for url in urls:
   assert location.startswith(base)
   assert (ROOT/location.removeprefix(base)).exists()
 robots=(ROOT/'robots.txt').read_text(encoding='utf-8')
+assert (ROOT/'CNAME').read_text().strip()==urlsplit(base).hostname
 assert f'Sitemap: {base}sitemap.xml' in robots
 assert 'User-agent: *\nAllow: /' in robots
 assert 'Disallow:' not in robots

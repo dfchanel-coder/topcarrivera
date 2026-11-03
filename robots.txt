@@ -4,4 +4,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dfchanel-coder.github.io/topcarrivera/sitemap.xml
+Sitemap: https://topcarrivera.com/sitemap.xml

@@ -61,7 +61,7 @@ El sitemap incluye solo las dos páginas canónicas indexables y, dentro de ella
 
 `robots.txt` permite rastrear el contenido público y los recursos CSS/JS. El grupo `User-agent: *` también cubre crawlers de IA que respeten robots; no hace falta duplicar docenas de grupos equivalentes. Incluye la URL absoluta del sitemap. Permitir rastreo no garantiza indexación ni regula por sí solo los usos posteriores del contenido.
 
-**Limitación del hosting actual:** el sitio vive en `https://dfchanel-coder.github.io/topcarrivera/`. Los buscadores buscan robots.txt en `https://dfchanel-coder.github.io/robots.txt`; el archivo dentro de `/topcarrivera/` no controla ese origen. Se puede enviar el sitemap del proyecto directamente a Search Console. Para robots efectivo, publicarlo en la raíz del sitio de usuario de GitHub Pages o conectar un dominio propio con estos archivos en su raíz. Este proyecto no modifica ese otro repositorio ni ninguna configuración externa.
+**Dominio actual:** https://topcarrivera.com/ está conectado a GitHub Pages mediante CNAME. robots.txt y sitemap.xml se sirven en la raíz del dominio. Canonical, hreflang, Open Graph y datos estructurados usan el mismo dominio.
 
 Referencia: https://developers.google.com/search/docs/crawling-indexing/robots/create-robots-txt
 
@@ -84,7 +84,7 @@ La última ejecución y las comprobaciones manuales se documentan en `AUDIT.md`.
 
 ## Publicación y pendientes del negocio
 
-La URL pública configurada sigue siendo https://dfchanel-coder.github.io/topcarrivera/. GitHub Pages publica la rama `main`; los cambios enviados al remoto disparan el despliegue. Mantener `node_modules`, `.cache` y los reportes de auditoría fuera del despliegue. `.nojekyll` permite servir archivos estáticos en GitHub Pages.
+La URL pública es https://topcarrivera.com/. GitHub Pages publica la rama `main`; los cambios enviados al remoto disparan el despliegue. Mantener `node_modules`, `.cache` y los reportes de auditoría fuera del despliegue. `.nojekyll` permite servir archivos estáticos en GitHub Pages.
 
 Desde el 02/11/2026 la portada, la sección técnica y el bloque de auxilio utilizan fotografías reales. Una galería de cuatro imágenes permite ampliarlas en un diálogo con controles, teclado y retorno del foco. Sin JavaScript los enlaces abren las imágenes. El nombre Auxilio BAIA aparece junto a TOP CAR en el bloque de asistencia, FAQ, metadatos, catálogo estructurado y llms.txt.
 

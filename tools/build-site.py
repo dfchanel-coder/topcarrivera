@@ -6,7 +6,7 @@ from urllib.parse import quote
 from real_photos import REAL_COPY, PHOTOS, LIBRARY, photo, gallery
 
 ROOT = Path(__file__).resolve().parent.parent
-BASE = 'https://dfchanel-coder.github.io/topcarrivera/'
+BASE = 'https://topcarrivera.com/'
 PHONE = '+59898738689'
 MAP = 'https://www.google.com/maps/search/?api=1&query=Paysand%C3%BA+255%2C+Rivera%2C+Uruguay'
 
@@ -203,7 +203,7 @@ if __name__ == '__main__':
  for code,data in CONTENT.items(): build(code,data)
  entries='\n'.join(f'''  <url>
     <loc>{BASE}{suffix}</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <xhtml:link rel="alternate" hreflang="es-UY" href="{BASE}" />
     <xhtml:link rel="alternate" hreflang="pt-BR" href="{BASE}pt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="{BASE}" />
